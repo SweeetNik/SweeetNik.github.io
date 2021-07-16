@@ -7,15 +7,14 @@ ymaps.ready(function () {
     }).then(function (result) {
         result.geoObjects.options.set('preset', 'islands#pinkCircleIcon');
         result.geoObjects.get(0).properties.set({
-            balloonContentBody: false,
-            iconContent: 'Я'
+            balloonContentBody: false
         });
         myMap.geoObjects.add(result.geoObjects);
     });
 
 
     var myMap = new ymaps.Map('map', {
-            center: [55.751574, 37.573856],
+            center: ymaps.geolocation,
             zoom: 9,
             behaviors: ['default', 'scrollZoom']
         }, {
