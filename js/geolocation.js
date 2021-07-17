@@ -1,23 +1,18 @@
 ymaps.ready(function () {
     var geolocation = ymaps.geolocation;
-        
     geolocation.get({
         provider: 'browser',
         mapStateAutoApply: true
     }).then(function (result) {
-        result.geoObjects.options.set('preset', 'islands#pinkCircleIcon');
-        result.geoObjects.get(0).properties.set({
-            balloonContentBody: false
-        });
-        myMap.geoObjects.add(result.geoObjects);
-    });
+        var gloc = ymaps.geolocation.get();
+        var mapContainer = $('#map');
+        bounds = result.geoObjects.get(0).properties.get('boundedBy');
+        mapState = ymaps.util.bounds.getCenterAndZoom(
+                bounds,
+                [mapContainer.width(), mapContainer.height()]
 
-
-    var myMap = new ymaps.Map('map', {
-            center: ymaps.geolocation,
-            zoom: 9,
-            behaviors: ['default', 'scrollZoom']
-        }, {
+            );
+        var myMap = new ymaps.Map('map', mapState, {
             searchControlProvider: 'yandex#search'
         }),
 
@@ -32,6 +27,10 @@ ymaps.ready(function () {
             clusterHideIconOnBalloonOpen: false,
             geoObjectHideIconOnBalloonOpen: false
         });
+    
+
+
+    
 
         localStorage.setItem('data_json', JSON.stringify(data));
         var data_json = JSON.parse(localStorage.getItem('data_json')).features;
@@ -65,7 +64,6 @@ ymaps.ready(function () {
     myMap.geoObjects.add(clusterer);
 
 
-    myMap.setBounds(clusterer.getBounds(), {
-        checkZoomRange: true
+
     });
 });
