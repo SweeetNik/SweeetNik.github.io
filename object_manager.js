@@ -57,6 +57,7 @@ function init () {
     $.ajax({
         url: "data.json"
     }).done(function(data) {
+        data.features.forEach(each => each.properties.balloonContentBody = "<input type=\"button\" value=\"Выбрать\" id=\"button1\" onclick=\"console.log(document.getElementsByClassName('ymaps-2-1-78-balloon-content__header')[0].innerHTML); document.getElementById('map').style.display = 'none'\">");
         objectManager.add(data);
     });
   }
